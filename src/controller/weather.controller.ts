@@ -14,5 +14,12 @@ export class WeatherController {
     constructor(WeatherService: WeatherService, WeatherView: WeatherView ){
         this.WeatherService = WeatherService;
         this.WeatherView = WeatherView;
+
+        this.WeatherView.bindSearchWeatherInput(this.handleSearchCity);
     }
+
+    handleSearchCity = (nameCity: string): any => {
+        this.WeatherService.searchWeatherCity(nameCity);
+    }
+
 }

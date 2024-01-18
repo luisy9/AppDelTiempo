@@ -18,10 +18,14 @@ export class WeatherView {
     inicialiceEvents(): void {
         this.createSkeletonApp();
         this.mountSkeleton();
+        // this.searchWeatherInput();
     }
 
     createElementDOM(element: string, className?: string): HTMLElement {
         const elementDOM = document.createElement(element);
+        if (elementDOM.tagName.toLowerCase() === 'input' && className) {
+            elementDOM.id = className;
+        }
         if (className) elementDOM.classList.add(className);
         return elementDOM;
     }
@@ -46,5 +50,15 @@ export class WeatherView {
         this.appBox.append(this.divSearchFlex, this.divBoxFlex);
         this.weatherDiv.append(this.appBox);
         this.root.append(this.weatherDiv);
+    }
+
+
+    bindSearchWeatherInput(handler: Function) {
+        this.inputSearchWeather.addEventListener('input', (event) => {
+            const nameCity = (event.target as any).value as string;
+            if (nameCity.length > 0) {
+                handler(nameCity);
+            }
+        });
     }
 } 
