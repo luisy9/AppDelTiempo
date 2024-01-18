@@ -12,6 +12,7 @@ export class WeatherService {
     }
 
 
+    //Refactorizar
     async searchWeatherCity(nameCity: string) {
         const options = {
             method: 'GET',
