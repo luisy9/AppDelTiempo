@@ -6,8 +6,39 @@
 export class WeatherService {
 
     public urlWeatherApi: string = 'https://weatherapi-com.p.rapidapi.com/current.json?q=';
+    public weatherArr: Array<{}> = [];
 
-    constructor() { }
+    constructor() {
+        console.log('hola')
+    }
+
+    // _commitWeatherArray(result: any) {
+    //     console.log('_commitWeatherArray')
+    //     const objectWeather = {
+    //         id: this._idWeather,
+    //         location: result.location,
+    //         current: result.current
+    //     }
+    //     this.weatherArr.push(objectWeather);
+    //     console.log(this.weatherArr)
+    // }
+
+    async searchWeatherCity(nameCity: string) {
+        try {
+            const urlWeatherApiNameCity = this.urlWeatherApi + nameCity;
+            const res = await fetch(urlWeatherApiNameCity, this._headersMethod);
+            const result = await res.json();
+            
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    addWeatherSearch() {
+        
+    }
+
 
     get _headersMethod(): Object {
         return {
@@ -18,15 +49,8 @@ export class WeatherService {
             }
         };
     }
-    //Refactorizar
-    async searchWeatherCity(nameCity: string) {
-        try {
-            const urlWeatherApiNameCity = this.urlWeatherApi + nameCity;
-            const res = await fetch(urlWeatherApiNameCity, this._headersMethod);
-            const result = await res.json();
-            console.log(result.current);
-        } catch (error) {
-            console.error(error);
-        }
+
+    get _idWeather(): number {
+        return Math.random() * 1000;
     }
 }

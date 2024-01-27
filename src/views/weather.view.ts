@@ -10,6 +10,8 @@ export class WeatherView {
     public divSearchAndTitle!: HTMLElement;
     public divSearchFlex!: HTMLElement;
     public divBoxFlex!: HTMLElement;
+    public buttonSubmitWeather!: HTMLElement;
+    public divInputAndButton!: HTMLElement;
 
     constructor() {
         this.inicialiceEvents();
@@ -40,11 +42,15 @@ export class WeatherView {
         this.appTitle = this.createElementDOM('h1', 'appTitle');
         this.appTitle.textContent = 'Weather App';
         this.inputSearchWeather = this.createElementDOM('input', 'inputSearchWeather');
+        this.buttonSubmitWeather = this.createElementDOM('button', 'buttonSubmitWeather');
+        this.buttonSubmitWeather.textContent = 'Search';
+        this.divInputAndButton = this.createElementDOM('div', 'divInputButton');
         this.divBoxFlex = this.createElementDOM('div', 'divBoxFlex');
     }
 
     mountSkeleton(): void {
-        this.divSearchAndTitle.append(this.appTitle, this.inputSearchWeather);
+        this.divInputAndButton.append(this.inputSearchWeather, this.buttonSubmitWeather);
+        this.divSearchAndTitle.append(this.appTitle, this.divInputAndButton);
         this.divSearchFlex.append(this.divSearchAndTitle);
         this.divBoxFlex.append(this.boxWeather);
         this.appBox.append(this.divSearchFlex, this.divBoxFlex);
@@ -54,11 +60,18 @@ export class WeatherView {
 
 
     bindSearchWeatherInput(handler: Function) {
-        this.inputSearchWeather.addEventListener('input', (event) => {
-            const nameCity = (event.target as any).value as string;
-            if (nameCity.length > 0) {
-                handler(nameCity);
-            }
+        this.inputSearchWeather.addEventListener('focusout', (inputEvent) => {
+            this.buttonSubmitWeather.addEventListener('click', event => {
+                const nameCity = (inputEvent.target as any).value as string;
+                if (nameCity.length > 0) {
+                    handler(nameCity);
+                }
+            });
         });
+    }
+
+    //Mostrar el resultado en el div
+    showSearchWeather() {
+
     }
 } 
