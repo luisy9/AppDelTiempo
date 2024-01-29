@@ -27,11 +27,13 @@ export class WeatherService {
         return Math.random() * 1000;
     }
 
+    //Aqui solamente le pasamos la referencia de onWeatherChanged del controllador
     bindWeatherListChanged(callback: Function){
         this.onWeatherChanged = callback;
     }
 
     _commt(weatherArray: WeatherModel[]){
+        //Ejecutamos la funcion de onWeatherChanged en el controllador pasandole el nuevo array de Weathers
         this.onWeatherChanged(weatherArray);
     }
 
