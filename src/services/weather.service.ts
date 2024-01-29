@@ -29,7 +29,6 @@ export class WeatherService {
 
     addWeatherSearch(result: WeatherModel) {
         const weatherObject = new WeatherModel(result);
-        console.log('Añadiendo Weather: ', weatherObject);
         if(this.weatherArray.length === 0){
             this.weatherArray.push(weatherObject);
         }else {
