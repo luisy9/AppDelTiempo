@@ -9,8 +9,31 @@ export class WeatherService {
 
     public urlWeatherApi: string = 'https://weatherapi-com.p.rapidapi.com/current.json?q=';
     public weatherArray: WeatherModel[] = [];
+    public onWeatherChanged!: Function;
 
     constructor() {}
+
+    get _headersMethod(): Object {
+        return {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'ca8883ebacmsh7f08012256b1c56p1407a3jsn9b1bc30c6e8a',
+                'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+            }
+        };
+    }
+
+    get _idWeather(): number {
+        return Math.random() * 1000;
+    }
+
+    bindWeatherListChanged(callback: Function){
+        this.onWeatherChanged = callback;
+    }
+
+    _commt(weatherArray: WeatherModel[]){
+        this.onWeatherChanged(weatherArray);
+    }
 
     async searchWeatherCity(nameCity: string) {
         try {
@@ -37,21 +60,6 @@ export class WeatherService {
                 this.weatherArray.push(weatherObject);
             }
         }
-        console.log(this.weatherArray);
-    }
-
-
-    get _headersMethod(): Object {
-        return {
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': 'ca8883ebacmsh7f08012256b1c56p1407a3jsn9b1bc30c6e8a',
-                'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
-            }
-        };
-    }
-
-    get _idWeather(): number {
-        return Math.random() * 1000;
+        this._commt(this.weatherArray);
     }
 }

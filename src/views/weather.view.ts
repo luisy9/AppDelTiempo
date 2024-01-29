@@ -1,3 +1,4 @@
+import { WeatherModel } from '../models/weather.controller';
 import '../styles.css'
 
 export class WeatherView {
@@ -76,7 +77,8 @@ export class WeatherView {
     }
 
     //Mostrar el resultado en el div
-    showSearchWeather() {
-
+    showSearchWeather(array: WeatherModel[]) {
+        console.log(array);
+        //Get the arrayWeather
     }
 } 
