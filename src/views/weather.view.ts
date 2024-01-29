@@ -79,6 +79,6 @@ export class WeatherView {
     //Mostrar el resultado en el div
     showSearchWeather(array: WeatherModel[]) {
         console.log(array);
-        //Get the arrayWeather
+        //List the City Weather selected y luego tendremos que poner el icono de la estrellita para guardarlo en el localStorage!
     }
 } 
