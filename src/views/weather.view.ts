@@ -6,7 +6,7 @@ export class WeatherView {
     public appBox!: HTMLElement;
     public boxWeather!: HTMLElement;
     public appTitle!: HTMLElement;
-    public inputSearchWeather!: HTMLElement;
+    public inputSearchWeather!: HTMLInputElement;
     public divSearchAndTitle!: HTMLElement;
     public divSearchFlex!: HTMLElement;
     public divBoxFlex!: HTMLElement;
@@ -17,10 +17,13 @@ export class WeatherView {
         this.inicialiceEvents();
     }
 
+    get _resetInput(): string {
+       return this.inputSearchWeather.value = '';
+    }
+
     inicialiceEvents(): void {
         this.createSkeletonApp();
         this.mountSkeleton();
-        // this.searchWeatherInput();
     }
 
     createElementDOM(element: string, className?: string): HTMLElement {
@@ -41,7 +44,7 @@ export class WeatherView {
         this.divSearchAndTitle = this.createElementDOM('div', 'divSearchAndTitle');
         this.appTitle = this.createElementDOM('h1', 'appTitle');
         this.appTitle.textContent = 'Weather App';
-        this.inputSearchWeather = this.createElementDOM('input', 'inputSearchWeather');
+        this.inputSearchWeather = this.createElementDOM('input', 'inputSearchWeather') as HTMLInputElement;
         this.buttonSubmitWeather = this.createElementDOM('button', 'buttonSubmitWeather');
         this.buttonSubmitWeather.textContent = 'Search';
         this.divInputAndButton = this.createElementDOM('div', 'divInputButton');
@@ -66,6 +69,8 @@ export class WeatherView {
                 if (nameCity.length > 0) {
                     handler(nameCity);
                 }
+                this.inputSearchWeather.value = nameCity;
+                this._resetInput;
             });
         });
     }

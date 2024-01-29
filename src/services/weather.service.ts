@@ -3,28 +3,14 @@
  * @Service Weather
  */
 
-import { WeatherArray } from "../interfaces/interfaces";
+import { WeatherModel } from "../models/weather.controller";
 
 export class WeatherService {
 
     public urlWeatherApi: string = 'https://weatherapi-com.p.rapidapi.com/current.json?q=';
-    // public weatherArr: WeatherArray[] = [{id: 0, location: {}, current: {}}];
-    public weatherArr: Array<{}> = [];
+    public weatherArray: WeatherModel[] = [];
 
-    constructor() {
-        console.log('hola')
-    }
-
-    // _commitWeatherArray(result: any) {
-    //     console.log('_commitWeatherArray')
-    //     const objectWeather = {
-    //         id: this._idWeather,
-    //         location: result.location,
-    //         current: result.current
-    //     }
-    //     this.weatherArr.push(objectWeather);
-    //     console.log(this.weatherArr)
-    // }
+    constructor() {}
 
     async searchWeatherCity(nameCity: string) {
         try {
@@ -32,12 +18,7 @@ export class WeatherService {
             const res = await fetch(urlWeatherApiNameCity, this._headersMethod);
             const result = await res.json();
             if(result.location && result.current){
-                const weatherObject = {
-                    id: this._idWeather,
-                    location: result.location,
-                    current: result.current
-                };
-                this.addWeatherSearch(weatherObject);
+                this.addWeatherSearch(result);
             }
 
         } catch (error) {
@@ -46,11 +27,18 @@ export class WeatherService {
     }
 
 
-    addWeatherSearch(result: Object) {
-        console.log(result);
-        /* Guardar el objeto de result en el Array de weatherArr para tenerlo en el array guardado
-        Y despleglarlo luego en el fron. Y luego para diferenciar si lo guardamos en el localStorage o no tenemos que poner true en el parametro localStorage del objeto  */
-        console.log(this.weatherArr, 'hola');
+    addWeatherSearch(result: WeatherModel) {
+        const weatherObject = new WeatherModel(result);
+        console.log('Añadiendo Weather: ', weatherObject);
+        if(this.weatherArray.length === 0){
+            this.weatherArray.push(weatherObject);
+        }else {
+            const idFind = this.weatherArray.find(e => e.id === weatherObject.id);
+            if(!idFind){
+                this.weatherArray.push(weatherObject);
+            }
+        }
+        console.log(this.weatherArray);
     }
 
 
