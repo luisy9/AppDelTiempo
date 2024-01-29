@@ -3,7 +3,6 @@ export interface WeatherGetOptions {
 }
 
 export interface WeatherArray {
-    id: number;
     location: Object;
     current: Object;
 }
